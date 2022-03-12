@@ -1,5 +1,6 @@
 import 'package:dio_demo/api/api.dart';
 import 'package:dio_demo/models/user_model.dart';
+import 'package:dio_demo/pages/register/register.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -32,6 +33,15 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Home'),
         centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.add),
+        label: const Text(
+          "Add User",
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, Register.route);
+        },
       ),
       body: users.isEmpty
           ? const Center(

@@ -65,4 +65,46 @@ class API {
       return false;
     }
   }
+
+  static Future<bool> userRegisterByHttp({
+    required String name,
+    required String age,
+  }) async {
+    final body = {
+      "name": name,
+      "age": int.parse(age),
+    };
+
+    ///post req
+    http.Response response = await http.post(
+      Uri.parse('$baseURL/user/'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(body),
+    );
+
+    ///status code
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<bool> userRegisterByDio({
+    required String name,
+    required String age,
+  }) async {
+    final body = {
+      "name": name,
+      "age": int.parse(age),
+    };
+
+    Response response = await dio.post('$baseURL/user', data: body);
+
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
