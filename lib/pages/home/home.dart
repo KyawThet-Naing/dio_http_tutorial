@@ -1,6 +1,7 @@
 import 'package:dio_demo/api/api.dart';
 import 'package:dio_demo/models/user_model.dart';
 import 'package:dio_demo/pages/register/register.dart';
+import 'package:dio_demo/pages/register/update.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -50,20 +51,35 @@ class _HomeState extends State<Home> {
           : ListView.builder(
               itemCount: users.length,
               itemBuilder: (context, index) => Card(
-                child: ListTile(
-                  title: Text(users[index].name ?? ''),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () async {
-                      String userId = users[index].id ?? '';
-                      bool bol = await API.deleteUserByDio(id: userId);
-                      if (bol) {
-                        getUser();
-                      } else {
-                        print("delete failed");
-                      }
-                    },
-                  ),
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(users[index].name ?? ''),
+                      subtitle: Text('Age ${users[index].age}'),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () async {
+                          String userId = users[index].id ?? '';
+                          bool bol = await API.deleteUserByDio(id: userId);
+                          if (bol) {
+                            getUser();
+                          } else {
+                            print("delete failed");
+                          }
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          Update.route,
+                          arguments: users[index],
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
